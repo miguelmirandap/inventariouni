@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+  <h2>Alertas Inteligentes</h2>
+
+  <h3>Stock critico</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>SKU</th><th>Producto</th><th>Stock</th><th>Minimo</th></tr></thead>
+      <tbody>
+      {% for r in stock_rows %}
+        <tr>
+          <td>{{ r.sku }}</td>
+          <td>{{ r.nombre }}</td>
+          <td>{{ r.stock_actual }}</td>
+          <td>{{ r.stock_minimo }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Deudas vencidas</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Deuda</th><th>Cliente</th><th>Concepto</th><th>Vencimiento</th><th>Dias atraso</th><th>Saldo</th></tr></thead>
+      <tbody>
+      {% for d in deuda_rows %}
+        <tr>
+          <td>#{{ d.id }}</td>
+          <td>{{ d.cliente }}</td>
+          <td>{{ d.concepto }}</td>
+          <td>{{ d.fecha_vencimiento }}</td>
+          <td>{{ d.dias_atraso }}</td>
+          <td>{{ d.saldo | currency }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

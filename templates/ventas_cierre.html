@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+  <div class="row-between">
+    <h2>Cierre diario de caja</h2>
+    <a class="btn-link" href="{{ url_for('ventas') }}">Volver a ventas</a>
+  </div>
+
+  <form method="get" class="inline-form">
+    <label>Fecha <input type="date" name="fecha" value="{{ fecha }}" /></label>
+    <button type="submit">Consultar</button>
+  </form>
+
+  <div class="cards">
+    <article class="card"><h3>Ventas</h3><p>{{ resumen.ventas }}</p></article>
+    <article class="card"><h3>Total</h3><p>{{ resumen.total | currency }}</p></article>
+    <article class="card"><h3>Contado</h3><p>{{ resumen.contado | currency }}</p></article>
+    <article class="card"><h3>Fiado</h3><p>{{ resumen.fiado | currency }}</p></article>
+    <article class="card"><h3>Efectivo</h3><p>{{ pagos.efectivo | currency }}</p></article>
+    <article class="card"><h3>Transferencia</h3><p>{{ pagos.transferencia | currency }}</p></article>
+  </div>
+
+  <h3>Ventas por usuario</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Usuario</th><th>Ventas</th><th>Total</th></tr>
+      </thead>
+      <tbody>
+      {% for r in por_usuario %}
+        <tr>
+          <td>{{ r.usuario }}</td>
+          <td>{{ r.ventas }}</td>
+          <td>{{ r.total | currency }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Top productos del dia</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>SKU</th><th>Producto</th><th>Unidades</th><th>Ingresos</th></tr>
+      </thead>
+      <tbody>
+      {% for p in top_productos %}
+        <tr>
+          <td>{{ p.sku }}</td>
+          <td>{{ p.producto }}</td>
+          <td>{{ p.unidades }}</td>
+          <td>{{ p.ingresos | currency }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

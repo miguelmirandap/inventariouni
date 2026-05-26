@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+  <h2>Reportes por fecha y categoria</h2>
+  <form method="get" class="inline-form">
+    <label>Desde <input type="date" name="fecha_inicio" value="{{ fecha_inicio }}" /></label>
+    <label>Hasta <input type="date" name="fecha_fin" value="{{ fecha_fin }}" /></label>
+    <button type="submit">Filtrar</button>
+  </form>
+
+  <h3>Resumen por categoria (ventas)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Categoria</th>
+          <th>Unidades vendidas</th>
+          <th>Ingresos</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for c in por_categoria %}
+        <tr>
+          <td>{{ c.categoria }}</td>
+          <td>{{ c.unidades_vendidas }}</td>
+          <td>{{ c.ingresos | currency }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Detalle de movimientos en rango</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Tipo</th>
+          <th>SKU</th>
+          <th>Producto</th>
+          <th>Categoria</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for d in detalle %}
+        <tr>
+          <td>{{ d.fecha }}</td>
+          <td>{{ d.tipo }}</td>
+          <td>{{ d.sku }}</td>
+          <td>{{ d.producto }}</td>
+          <td>{{ d.categoria }}</td>
+          <td>{{ d.cantidad }}</td>
+          <td>{{ d.total | currency }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

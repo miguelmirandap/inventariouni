@@ -1,0 +1,22 @@
+{
+  "name": "Eventos Salomé - Inventario",
+  "short_name": "Inventario Salomé",
+  "description": "Sistema de inventario para cafetería universitaria",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5edde",
+  "theme_color": "#0a9f72",
+  "icons": [
+    {
+      "src": "/static/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+}

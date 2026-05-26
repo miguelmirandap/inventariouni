@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ticket Venta #{{ venta.id }}</title>
+    <style>
+      body { font-family: 'IBM Plex Mono', monospace; padding: 20px; color: #222; }
+      .ticket { max-width: 420px; margin: 0 auto; border: 1px dashed #888; padding: 14px; }
+      h1 { font-size: 18px; margin: 0 0 6px; }
+      p { margin: 3px 0; }
+      table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
+      th, td { border-bottom: 1px solid #ddd; padding: 4px; text-align: left; }
+      .total { font-weight: bold; font-size: 16px; margin-top: 10px; }
+      .actions { text-align: center; margin-top: 14px; }
+      @media print { .actions { display: none; } body { padding: 0; } .ticket { border: none; } }
+    </style>
+  </head>
+  <body>
+    <section class="ticket">
+      <h1>Tienda Cafeteria Uni</h1>
+      <p>Ticket: #{{ venta.id }}</p>
+      <p>Fecha: {{ venta.fecha }}</p>
+      <p>Cliente: {{ venta.cliente }}</p>
+      <p>Pago: {{ venta.tipo_pago }}</p>
+      <p>Usuario: {{ venta.usuario }}</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cant</th>
+            <th>P. Unit</th>
+            <th>Importe</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for d in detalles %}
+            <tr>
+              <td>{{ d.producto }}</td>
+              <td>{{ d.cantidad }}</td>
+              <td>{{ d.precio_unitario | currency }}</td>
+              <td>{{ d.total_linea | currency }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <p class="total">TOTAL: {{ venta.total | currency }}</p>
+      {% if venta.notas %}
+        <p>Notas: {{ venta.notas }}</p>
+      {% endif %}
+
+      <div class="actions">
+        <button onclick="window.print()">Imprimir ticket</button>
+      </div>
+    </section>
+  </body>
+</html>

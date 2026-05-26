@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title or "Inventario" }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <link rel="manifest" href="/manifest.json" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="bg-shape one"></div>
+    <div class="bg-shape two"></div>
+    <div class="bg-grid"></div>
+
+    {% if session.username %}
+      <header class="topbar" role="banner">
+        <div class="brand-block">
+          <h1>Eventos Salomé</h1>
+          <p>Operacion diaria de cafeteria</p>
+        </div>
+        <nav class="main-nav" role="navigation" aria-label="Navegación principal">
+          <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}" title="Vista general del inventario" aria-label="Ir al Dashboard">
+            <i class="fas fa-chart-line nav-icon"></i> Dashboard
+          </a>
+          <a class="nav-link {% if request.endpoint == 'productos' %}active{% endif %}" href="{{ url_for('productos') }}" title="Gestionar productos" aria-label="Ir a Productos">
+            <i class="fas fa-boxes nav-icon"></i> Productos
+          </a>
+          <a class="nav-link {% if request.endpoint == 'movimientos' %}active{% endif %}" href="{{ url_for('movimientos') }}" title="Ver movimientos de inventario" aria-label="Ir a Movimientos">
+            <i class="fas fa-exchange-alt nav-icon"></i> Movimientos
+          </a>
+          <a class="nav-link {% if request.endpoint in ['ventas', 'venta_ticket', 'ventas_cierre'] %}active{% endif %}" href="{{ url_for('ventas') }}" title="Registrar ventas" aria-label="Ir a Ventas">
+            <i class="fas fa-cash-register nav-icon"></i> Ventas
+          </a>
+          <a class="nav-link {% if request.endpoint == 'cartera' %}active{% endif %}" href="{{ url_for('cartera') }}" title="Ver cartera de productos" aria-label="Ir a Cartera">
+            <i class="fas fa-clipboard-list nav-icon"></i> Cartera
+          </a>
+          <a class="nav-link {% if request.endpoint == 'alertas' %}active{% endif %}" href="{{ url_for('alertas') }}" title="Ver alertas de stock" aria-label="Ir a Alertas">
+            <i class="fas fa-exclamation-triangle nav-icon"></i> Alertas
+          </a>
+          <a class="nav-link {% if request.endpoint == 'reportes' %}active{% endif %}" href="{{ url_for('reportes') }}" title="Generar reportes" aria-label="Ir a Reportes">
+            <i class="fas fa-chart-bar nav-icon"></i> Reportes
+          </a>
+          <a class="nav-link {% if request.endpoint == 'perfil_password' %}active{% endif %}" href="{{ url_for('perfil_password') }}" title="Configurar perfil" aria-label="Ir a Perfil">
+            <i class="fas fa-user nav-icon"></i> Perfil
+          </a>
+          {% if session.role == 'admin' %}
+            <a class="nav-link {% if request.endpoint == 'admin_backups' %}active{% endif %}" href="{{ url_for('admin_backups') }}" title="Administrar backups" aria-label="Ir a Admin">
+              <i class="fas fa-cogs nav-icon"></i> Admin
+            </a>
+          {% endif %}
+          <a class="nav-link logout-link" href="{{ url_for('logout') }}" title="Cerrar sesión" aria-label="Cerrar sesión">
+            <i class="fas fa-sign-out-alt nav-icon"></i> Salir
+          </a>
+        </nav>
+        <div class="user-badge">
+          <strong>{{ session.nombre }}</strong>
+          <span>{{ session.role }}</span>
+        </div>
+        <div id="offline-indicator" class="badge bad" style="display: none;" aria-live="assertive">
+          <i class="fas fa-wifi-slash"></i> Sin conexión
+        </div>
+      </header>
+    {% endif %}
+
+    <main class="container" role="main">
+      {% if session.username %}
+        <nav aria-label="Breadcrumbs" class="breadcrumbs">
+          <a href="{{ url_for('dashboard') }}">Inicio</a> &gt; <span>{{ title or "Dashboard" }}</span>
+        </nav>
+      {% endif %}
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <section class="flash-list" role="alert" aria-live="polite">
+            {% for category, message in messages %}
+              <article class="flash {{ category }}">{{ message }}</article>
+            {% endfor %}
+          </section>
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer" role="contentinfo">
+      <p>&copy; 2024 Sistema Inventario Uni. Todos los derechos reservados.</p>
+      <p>Versión 1.0 | <a href="#" onclick="showHelp()">Ayuda</a></p>
+    </footer>
+
+    <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+  </body>
+</html>

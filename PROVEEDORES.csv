@@ -1,0 +1,6 @@
+Proveedor_ID,Nombre,Contacto,Telefono,Correo,Dias_Credito,Tiempo_Entrega_Dias,Notas
+PROV-01,Papeleria Central,Laura Perez,5551234567,ventas@papeleriacentral.com,15,2,Entrega lunes y jueves
+PROV-02,Distribuidora Escolar MX,Carlos Ruiz,5552345678,pedidos@escolarmx.com,7,3,Pedido minimo 100 piezas
+PROV-03,TecnoSupply Campus,Ana Torres,5553456789,soporte@tecnosupply.com,30,5,Garantia en electronicos
+PROV-04,SnackMarket Uni,Jose Gomez,5554567890,compras@snackmarket.com,10,1,Revisar caducidad en entrega
+PROV-05,Higiene Total,Mariana Soto,5555678901,contacto@higienetotal.com,15,3,Productos de limpieza y cuidado

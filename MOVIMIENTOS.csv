@@ -1,0 +1,6 @@
+Fecha,Tipo,SKU,Producto,Cantidad,Costo_Unitario,Precio_Unitario,Motivo,Responsable
+2026-03-10,ENTRADA,LIB-001,Cuaderno universitario A4,20,1.20,2.00,Compra semanal,Admin
+2026-03-10,SALIDA,LIB-002,Boligrafo azul,10,0.25,0.60,Venta mostrador,Caja 1
+2026-03-10,SALIDA,SNK-001,Galletas de avena,8,0.35,0.70,Venta mostrador,Caja 1
+2026-03-10,SALIDA,TEC-001,Memoria USB 32GB,2,4.50,7.50,Venta mostrador,Caja 2
+2026-03-10,AJUSTE,HIG-002,Panuelos desechables,-1,0.50,1.00,Conteo fisico,Admin

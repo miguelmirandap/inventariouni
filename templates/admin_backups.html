@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+  <h2>Administracion de respaldos</h2>
+
+  <form method="post" class="inline-form">
+    <input type="hidden" name="action" value="create" />
+    <button type="submit">Crear respaldo ahora</button>
+  </form>
+
+  <h3>Respaldos disponibles</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Archivo</th><th>Accion</th></tr></thead>
+      <tbody>
+      {% for b in backups %}
+        <tr>
+          <td>{{ b.name }}</td>
+          <td>
+            <form method="post" class="inline-form" onsubmit="return confirm('Restaurar este respaldo reemplazara la BD actual. Continuar?')">
+              <input type="hidden" name="action" value="restore" />
+              <input type="hidden" name="backup_name" value="{{ b.name }}" />
+              <button type="submit" class="remove-line">Restaurar</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

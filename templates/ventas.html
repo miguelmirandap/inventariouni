@@ -1,0 +1,130 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+  <div class="row-between">
+    <h2>Gestor de ventas</h2>
+    <div class="stat-row">
+      <strong>Total hoy: {{ total_hoy | currency }}</strong>
+      <span>Contado: {{ contado_hoy | currency }}</span>
+      <span>Fiado: {{ fiado_hoy | currency }}</span>
+      <a class="btn-link" href="{{ url_for('ventas_cierre') }}">Ver cierre diario</a>
+      <a class="btn-link" href="{{ url_for('export_ventas_csv') }}">Exportar CSV</a>
+      <a class="btn-link" href="{{ url_for('export_ventas_xlsx') }}">Exportar XLSX</a>
+      <a class="btn-link" href="{{ url_for('export_cierre_pdf', fecha=request.args.get('fecha', '')) }}">Exportar Cierre PDF</a>
+    </div>
+  </div>
+
+  <div class="cards cards-cartera">
+    <article class="card">
+      <h3>Nueva venta (multi-producto)</h3>
+      <p class="muted">Agrega todos los productos del ticket y registra una sola operacion.</p>
+      <form method="post" class="grid-form" id="venta-form">
+        <div class="line-items" id="line-items">
+          <div class="line-item">
+            <label>
+              Producto
+              <select name="sku[]" required>
+                <option value="">Seleccionar</option>
+                {% for p in productos %}
+                  <option value="{{ p.sku }}">{{ p.nombre }} ({{ p.sku }}) - stock: {{ p.stock_actual }}</option>
+                {% endfor %}
+              </select>
+            </label>
+            <label>Cantidad<input type="number" name="cantidad[]" min="1" value="1" required /></label>
+            <label>Precio unitario (opcional)<input type="number" step="0.01" min="0" name="precio_unitario[]" /></label>
+            <button type="button" class="remove-line" onclick="removeLine(this)">Quitar</button>
+          </div>
+        </div>
+        <button type="button" class="btn-secondary" onclick="addLine()">Agregar otro producto</button>
+        <label>
+          Tipo pago
+          <select name="tipo_pago" required>
+            <option value="CONTADO">CONTADO</option>
+            <option value="FIADO">FIADO</option>
+          </select>
+        </label>
+        <label>
+          Cliente (si es fiado)
+          <select name="cliente_id">
+            <option value="">Sin cliente</option>
+            {% for c in clientes %}
+              <option value="{{ c.id }}">{{ c.nombre }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label>Notas<input type="text" name="notas" /></label>
+        <button type="submit" onclick="return confirmAction('Â¿Confirmar registro de venta?')">Registrar venta</button>
+      </form>
+    </article>
+  </div>
+
+  <h3 class="section-title">Ultimas ventas</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Venta</th>
+          <th>Fecha</th>
+          <th>Pago</th>
+          <th>Cliente</th>
+          <th>Items</th>
+          <th>Total</th>
+          <th>Usuario</th>
+          <th>Ticket</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for v in ventas %}
+        <tr>
+          <td>#{{ v.id }}</td>
+          <td>{{ v.fecha }}</td>
+          <td>
+            {% if v.tipo_pago == 'FIADO' %}
+              <span class="badge bad">FIADO</span>
+            {% else %}
+              <span class="badge ok">CONTADO</span>
+            {% endif %}
+          </td>
+          <td>{{ v.cliente }}</td>
+          <td>{{ v.items }}</td>
+          <td>{{ v.total | currency }}</td>
+          <td>{{ v.usuario }}</td>
+          <td><a class="btn-link" href="{{ url_for('venta_ticket', venta_id=v.id) }}" target="_blank">Abrir</a></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<template id="line-item-template">
+  <div class="line-item">
+    <label>
+      Producto
+      <select name="sku[]" required>
+        <option value="">Seleccionar</option>
+        {% for p in productos %}
+          <option value="{{ p.sku }}">{{ p.nombre }} ({{ p.sku }}) - stock: {{ p.stock_actual }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Cantidad<input type="number" name="cantidad[]" min="1" value="1" required /></label>
+    <label>Precio unitario (opcional)<input type="number" step="0.01" min="0" name="precio_unitario[]" /></label>
+    <button type="button" class="remove-line" onclick="removeLine(this)">Quitar</button>
+  </div>
+</template>
+
+<script>
+  function addLine() {
+    const tpl = document.getElementById('line-item-template');
+    const clone = tpl.content.cloneNode(true);
+    document.getElementById('line-items').appendChild(clone);
+  }
+
+  function removeLine(btn) {
+    const wrap = document.getElementById('line-items');
+    if (wrap.children.length <= 1) return;
+    btn.closest('.line-item').remove();
+  }
+</script>
+{% endblock %}

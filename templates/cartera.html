@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+  <div class="row-between">
+    <h2>Cartera</h2>
+    <div class="stat-row">
+        <strong>Total pendiente: {{ total_pendiente | currency }}</strong>
+
+  <div class="cards cards-cartera">
+    <article class="card">
+      <h3>Nuevo cliente</h3>
+      <form method="post" action="{{ url_for('cartera_nuevo_cliente') }}" class="grid-form">
+        <label>Nombre<input type="text" name="nombre" required /></label>
+        <label>Telefono<input type="text" name="telefono" /></label>
+        <label>Correo<input type="email" name="correo" /></label>
+        <label>Notas<input type="text" name="notas" /></label>
+        <button type="submit">Guardar cliente</button>
+      </form>
+    </article>
+
+    <article class="card">
+      <h3>Nueva deuda</h3>
+      <form id="cartera-deuda-form" method="post" action="{{ url_for('cartera_nueva_deuda') }}" class="grid-form">
+        <label>
+          Cliente
+          <select name="cliente_id" required>
+            <option value="">Seleccionar</option>
+            {% for c in clientes %}
+              <option value="{{ c.id }}">{{ c.nombre }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label>
+          Buscar producto
+          <input type="text" id="product-concept-search" list="concepto-productos" autocomplete="off" placeholder="Escribe producto o SKU" />
+          <datalist id="concepto-productos">
+            {% for p in productos_concepto %}
+              <option value="{{ p.nombre }}"></option>
+            {% endfor %}
+          </datalist>
+        </label>
+        <label class="full-width">
+          <button type="button" id="product-concept-add">Agregar producto</button>
+        </label>
+        <div class="selected-products full-width">
+          <table>
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>SKU</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>Quitar</th>
+              </tr>
+            </thead>
+            <tbody id="selected-product-rows"></tbody>
+          </table>
+        </div>
+        <input type="hidden" name="concepto" id="concepto-hidden" />
+        <label>Monto total<input type="number" step="0.01" min="0.00" name="monto_total" id="monto-total" value="0.00" readonly required /></label>
+        <label>Vencimiento<input type="date" name="fecha_vencimiento" /></label>
+        <button type="submit">Registrar deuda</button>
+      </form>
+      <script>
+        window.debtProductOptions = {{ productos_concepto | tojson | safe }};
+      </script>
+    </article>
+
+    <article class="card">
+      <h3>Registrar abono</h3>
+      <form method="post" action="{{ url_for('cartera_nuevo_abono') }}" class="grid-form">
+        <label>
+          Deuda pendiente
+          <select name="deuda_id" required>
+            <option value="">Seleccionar</option>
+            {% for d in deudas %}
+              {% if d.estado != 'PAGADA' %}
+                <option value="{{ d.id }}">#{{ d.id }} - {{ d.cliente_nombre }} ({{ d.saldo | currency }})</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </label>
+        <label>Monto<input type="number" step="0.01" min="0.01" name="monto" required /></label>
+        <label>
+          Método de pago
+          <select name="metodo_pago" required>
+            <option value="">Seleccionar</option>
+            <option value="Efectivo">Efectivo</option>
+            <option value="Transferencia">Transferencia</option>
+            </select>
+        </label>
+        <button type="submit">Aplicar abono</button>
+      </form>
+    </article>
+  </div>
+
+  <h3>Clientes y saldo</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Telefono</th>
+          <th>Correo</th>
+          <th>Saldo pendiente</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for c in clientes %}
+        <tr>
+          <td>{{ c.nombre }}</td>
+          <td>{{ c.telefono or '-' }}</td>
+          <td>{{ c.correo or '-' }}</td>
+          <td>{{ c.saldo_pendiente | currency }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Deudas registradas</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fecha</th>
+          <th>Vence</th>
+          <th>Cliente</th>
+          <th>Concepto</th>
+          <th>Total</th>
+          <th>Pagado</th>
+          <th>Saldo</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for d in deudas %}
+        <tr>
+          <td>#{{ d.id }}</td>
+          <td>{{ d.fecha }}</td>
+          <td>{{ d.fecha_vencimiento or '-' }}</td>
+          <td>{{ d.cliente_nombre }}</td>
+          <td>{{ d.concepto }}</td>
+          <td>{{ d.monto_total | currency }}</td>
+          <td>{{ d.monto_pagado | currency }}</td>
+          <td>{{ d.saldo | currency }}</td>
+          <td>
+            {% if d.estado == 'PAGADA' %}
+              <span class="badge ok">PAGADA</span>
+            {% else %}
+              <span class="badge bad">{{ d.estado }}</span>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

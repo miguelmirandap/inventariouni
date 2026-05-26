@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel login-panel">
+  <h2>Iniciar sesion</h2>
+  <p>Controla inventario, movimientos y reportes de la tienda universitaria.</p>
+  <form method="post" class="grid-form">
+    <label>
+      Usuario
+      <input type="text" name="username" required />
+    </label>
+    <label>
+      Contrasena
+      <input type="password" name="password" required />
+    </label>
+    <button type="submit">Entrar</button>
+  </form>
+  <div class="hint">
+    <strong>Usuarios demo:</strong> admin/admin123 y caja/caja123
+  </div>
+</section>
+{% endblock %}

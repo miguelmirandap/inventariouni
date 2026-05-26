@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+  <div class="row-between">
+    <h2>Dashboard</h2>
+    <div class="stat-row">
+      <a class="btn-link" href="{{ url_for('ventas') }}">Nueva venta</a>
+      <a class="btn-link" href="{{ url_for('productos') }}">Ver inventario</a>
+      <a class="btn-link" href="{{ url_for('ventas_cierre') }}">Cierre diario</a>
+    </div>
+  </div>
+  <div class="cards">
+    <article class="card">
+      <h3>Productos</h3>
+      <p>{{ resumen.total_productos }}</p>
+    </article>
+    <article class="card">
+      <h3>Valor inventario</h3>
+      <p>{{ resumen.valor_inventario | currency }}</p>
+    </article>
+    <article class="card">
+      <h3>Utilidad potencial</h3>
+      <p>{{ resumen.utilidad_potencial | currency }}</p>
+    </article>
+    <article class="card warn">
+      <h3>Stock bajo</h3>
+      <p>{{ stock_bajo }}</p>
+    </article>
+    <article class="card">
+      <h3>Cartera pendiente</h3>
+      <p>{{ cartera_pendiente | currency }}</p>
+    </article>
+    <article class="card warn">
+      <h3>Stock critico</h3>
+      <p>{{ stock_critico }}</p>
+    </article>
+    <article class="card warn">
+      <h3>Deudas vencidas</h3>
+      <p>{{ deudas_vencidas }}</p>
+    </article>
+  </div>
+
+  <h3 class="section-title">Gráfico de Ventas (Últimos 7 días)</h3>
+  <div class="chart-container">
+    <canvas id="ventasChart"></canvas>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('ventasChart').getContext('2d');
+    const ventasChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5', 'Día 6', 'Día 7'],
+        datasets: [{
+          label: 'Ventas Diarias',
+          data: [12, 19, 3, 5, 2, 3, 9], // Datos de ejemplo, reemplazar con datos reales
+          borderColor: 'var(--accent)',
+          backgroundColor: 'rgba(10, 127, 98, 0.1)',
+          tension: 0.1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+
+  {% if alertas %}
+    <h3 class="section-title">Alertas</h3>
+    <ul class="alert-list">
+      {% for a in alertas %}
+        <li>{{ a }}</li>
+      {% endfor %}
+    </ul>
+    <a class="btn-link" href="{{ url_for('alertas') }}">Ver detalle de alertas</a>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+  <h2>Movimientos</h2>
+  <form method="post" class="grid-form two-col">
+    <label>
+      Tipo
+      <select name="tipo" required>
+        <option value="ENTRADA">ENTRADA</option>
+        <option value="SALIDA">SALIDA</option>
+        <option value="AJUSTE">AJUSTE</option>
+      </select>
+    </label>
+    <label>
+      SKU
+      <input type="text" list="skus" name="sku" required />
+      <datalist id="skus">
+        {% for p in productos %}
+          <option value="{{ p.sku }}">{{ p.nombre }} (stock: {{ p.stock_actual }})</option>
+        {% endfor %}
+      </datalist>
+    </label>
+    <label>Cantidad<input type="number" name="cantidad" required /></label>
+    <label>Costo unitario<input type="number" step="0.01" name="costo_unitario" /></label>
+    <label>Precio unitario<input type="number" step="0.01" name="precio_unitario" /></label>
+    <label>Motivo<input type="text" name="motivo" /></label>
+    <button type="submit">Registrar movimiento</button>
+  </form>
+
+  <h3>Ultimos movimientos</h3>
+  <div class="row-between">
+    <div class="inline-form">
+      <input type="date" id="fecha-filter" placeholder="Filtrar por fecha" />
+      <select id="tipo-filter">
+        <option value="">Todos los tipos</option>
+        <option value="ENTRADA">ENTRADA</option>
+        <option value="SALIDA">SALIDA</option>
+        <option value="AJUSTE">AJUSTE</option>
+      </select>
+      <input type="text" id="sku-filter" placeholder="Filtrar por SKU" />
+    </div>
+    <a class="btn-link" href="{{ url_for('export_movimientos_csv') }}">Exportar CSV</a>
+  </div>
+  <div class="table-wrap">
+    <table id="movimientos-table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Tipo</th>
+          <th>SKU</th>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>Responsable</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for m in movimientos %}
+        <tr>
+          <td>{{ m.fecha }}</td>
+          <td>{{ m.tipo }}</td>
+          <td>{{ m.sku }}</td>
+          <td>{{ m.producto }}</td>
+          <td>{{ m.cantidad }}</td>
+          <td>{{ m.precio_unitario | currency }}</td>
+          <td>{{ m.responsable }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Filtros en tiempo real
+    document.addEventListener('DOMContentLoaded', () => {
+      const fechaFilter = document.getElementById('fecha-filter');
+      const tipoFilter = document.getElementById('tipo-filter');
+      const skuFilter = document.getElementById('sku-filter');
+      const table = document.getElementById('movimientos-table');
+      const rows = table.querySelectorAll('tbody tr');
+
+      function filterRows() {
+        const fechaValue = fechaFilter.value;
+        const tipoValue = tipoFilter.value.toLowerCase();
+        const skuValue = skuFilter.value.toLowerCase();
+
+        rows.forEach(row => {
+          const cells = row.querySelectorAll('td');
+          const fecha = cells[0].textContent;
+          const tipo = cells[1].textContent.toLowerCase();
+          const sku = cells[2].textContent.toLowerCase();
+
+          const matchesFecha = !fechaValue || fecha.includes(fechaValue);
+          const matchesTipo = !tipoValue || tipo.includes(tipoValue);
+          const matchesSku = !skuValue || sku.includes(skuValue);
+
+          row.style.display = matchesFecha && matchesTipo && matchesSku ? '' : 'none';
+        });
+      }
+
+      fechaFilter.addEventListener('input', filterRows);
+      tipoFilter.addEventListener('change', filterRows);
+      skuFilter.addEventListener('input', filterRows);
+    });
+  </script>
+</section>
+{% endblock %}

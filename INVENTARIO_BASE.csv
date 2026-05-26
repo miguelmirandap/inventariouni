@@ -1,0 +1,13 @@
+SKU,Producto,Categoria,Unidad,Stock_Actual,Stock_Minimo,Precio_Compra,Precio_Venta,Proveedor,Ubicacion,Fecha_Ultima_Entrada,Fecha_Ultima_Salida,Observaciones
+LIB-001,Cuaderno universitario A4,Utiles,pza,80,20,1.20,2.00,PROV-01,Estante A1,2026-03-05,2026-03-09,Producto de alta rotacion
+LIB-002,Boligrafo azul,Utiles,pza,150,40,0.25,0.60,PROV-01,Estante A2,2026-03-04,2026-03-10,
+LIB-003,Lapiz HB,Utiles,pza,120,30,0.18,0.50,PROV-01,Estante A2,2026-03-04,2026-03-08,
+LIB-004,Resaltador amarillo,Utiles,pza,60,15,0.45,1.00,PROV-02,Estante A3,2026-02-28,2026-03-07,
+TEC-001,Memoria USB 32GB,Tecnologia,pza,25,10,4.50,7.50,PROV-03,Vitrina T1,2026-03-01,2026-03-06,
+TEC-002,Audifonos basicos,Tecnologia,pza,30,12,3.80,6.50,PROV-03,Vitrina T2,2026-03-02,2026-03-09,
+SNK-001,Galletas de avena,Snacks,pza,90,25,0.35,0.70,PROV-04,Mostrador S1,2026-03-10,2026-03-10,Revisar fecha de caducidad
+SNK-002,Jugo en caja 250ml,Snacks,pza,70,20,0.40,0.85,PROV-04,Refrigerador S2,2026-03-09,2026-03-10,
+HIG-001,Gel antibacterial 60ml,Higiene,pza,40,10,1.10,2.00,PROV-05,Mostrador H1,2026-03-03,2026-03-08,
+HIG-002,Panuelos desechables,Higiene,pza,55,15,0.50,1.00,PROV-05,Mostrador H1,2026-03-03,2026-03-09,
+IMP-001,Impresion B/N carta,Servicios,servicio,0,0,0.03,0.10,INTERNO,Caja,2026-03-10,2026-03-10,Controlar por cantidad de paginas
+IMP-002,Impresion color carta,Servicios,servicio,0,0,0.08,0.25,INTERNO,Caja,2026-03-10,2026-03-10,Controlar por cantidad de paginas
