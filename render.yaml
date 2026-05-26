@@ -5,7 +5,7 @@ services:
     plan: free
     branch: main
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app_web:app --bind 0.0.0.0:$PORT
+    startCommand: python -m gunicorn app_web:app --bind 0.0.0.0:$PORT
     envVars:
       - key: HOST
         value: 0.0.0.0
