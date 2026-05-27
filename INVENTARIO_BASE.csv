@@ -1,13 +1,28 @@
 SKU,Producto,Categoria,Unidad,Stock_Actual,Stock_Minimo,Precio_Compra,Precio_Venta,Proveedor,Ubicacion,Fecha_Ultima_Entrada,Fecha_Ultima_Salida,Observaciones
-LIB-001,Cuaderno universitario A4,Utiles,pza,80,20,1.20,2.00,PROV-01,Estante A1,2026-03-05,2026-03-09,Producto de alta rotacion
-LIB-002,Boligrafo azul,Utiles,pza,150,40,0.25,0.60,PROV-01,Estante A2,2026-03-04,2026-03-10,
-LIB-003,Lapiz HB,Utiles,pza,120,30,0.18,0.50,PROV-01,Estante A2,2026-03-04,2026-03-08,
-LIB-004,Resaltador amarillo,Utiles,pza,60,15,0.45,1.00,PROV-02,Estante A3,2026-02-28,2026-03-07,
-TEC-001,Memoria USB 32GB,Tecnologia,pza,25,10,4.50,7.50,PROV-03,Vitrina T1,2026-03-01,2026-03-06,
-TEC-002,Audifonos basicos,Tecnologia,pza,30,12,3.80,6.50,PROV-03,Vitrina T2,2026-03-02,2026-03-09,
-SNK-001,Galletas de avena,Snacks,pza,90,25,0.35,0.70,PROV-04,Mostrador S1,2026-03-10,2026-03-10,Revisar fecha de caducidad
-SNK-002,Jugo en caja 250ml,Snacks,pza,70,20,0.40,0.85,PROV-04,Refrigerador S2,2026-03-09,2026-03-10,
-HIG-001,Gel antibacterial 60ml,Higiene,pza,40,10,1.10,2.00,PROV-05,Mostrador H1,2026-03-03,2026-03-08,
-HIG-002,Panuelos desechables,Higiene,pza,55,15,0.50,1.00,PROV-05,Mostrador H1,2026-03-03,2026-03-09,
-IMP-001,Impresion B/N carta,Servicios,servicio,0,0,0.03,0.10,INTERNO,Caja,2026-03-10,2026-03-10,Controlar por cantidad de paginas
-IMP-002,Impresion color carta,Servicios,servicio,0,0,0.08,0.25,INTERNO,Caja,2026-03-10,2026-03-10,Controlar por cantidad de paginas
+DES-001,Arepa de queso,Desayuno,pza,50,15,0.80,2.00,PROV-01,Mostrador D1,2026-03-10,2026-03-10,Recién hechas
+DES-002,Pan francés,Desayuno,pza,60,20,0.50,1.20,PROV-01,Mostrador D1,2026-03-10,2026-03-10,
+DES-003,Tamale de pollo,Desayuno,pza,40,12,1.00,2.50,PROV-01,Mostrador D1,2026-03-10,2026-03-10,
+DES-004,Empanada frita,Desayuno,pza,80,25,0.60,1.50,PROV-01,Mostrador D1,2026-03-10,2026-03-10,
+DES-005,Huevos revueltos con pan,Desayuno,pza,45,15,1.20,3.00,PROV-01,Mostrador D1,2026-03-10,2026-03-10,
+ALM-001,Bandeja paisa,Almuerzo,pza,30,10,3.50,8.00,PROV-02,Cocina C1,2026-03-10,2026-03-10,Especialidad de la casa
+ALM-002,Arroz con pollo,Almuerzo,pza,40,12,2.00,5.50,PROV-02,Cocina C1,2026-03-10,2026-03-10,
+ALM-003,Carne asada con papa,Almuerzo,pza,35,10,2.50,6.00,PROV-02,Cocina C1,2026-03-10,2026-03-10,
+ALM-004,Sancocho de verdura,Almuerzo,pza,50,15,1.80,4.50,PROV-02,Cocina C1,2026-03-10,2026-03-10,
+FRI-001,Papas fritas,Fritos,pza,100,30,0.40,1.00,PROV-03,Mostrador F1,2026-03-10,2026-03-10,
+FRI-002,Deditos de queso,Fritos,pza,80,25,0.50,1.20,PROV-03,Mostrador F1,2026-03-10,2026-03-10,
+FRI-003,Buñuelos de papa,Fritos,pza,70,20,0.45,1.10,PROV-03,Mostrador F1,2026-03-10,2026-03-10,
+FRI-004,Churros con chocolate,Fritos,pza,60,20,0.60,1.50,PROV-03,Mostrador F1,2026-03-10,2026-03-10,
+FRI-005,Croquetas de pollo,Fritos,pza,75,20,0.55,1.30,PROV-03,Mostrador F1,2026-03-10,2026-03-10,
+BEB-001,Café americano,Bebida,taza,120,40,0.30,1.00,PROV-04,Mostrador B1,2026-03-10,2026-03-10,
+BEB-002,Café con leche,Bebida,taza,110,35,0.40,1.20,PROV-04,Mostrador B1,2026-03-10,2026-03-10,
+BEB-003,Chocolate caliente,Bebida,taza,90,30,0.50,1.50,PROV-04,Mostrador B1,2026-03-10,2026-03-10,
+BEB-004,Jugo natural naranja,Bebida,vaso,100,30,0.60,1.50,PROV-04,Refrigerador B2,2026-03-10,2026-03-10,
+BEB-005,Gaseosa 350ml,Bebida,pza,150,50,0.80,1.80,PROV-04,Refrigerador B2,2026-03-10,2026-03-10,
+BEB-006,Agua embotellada,Bebida,pza,200,80,0.30,0.80,PROV-04,Refrigerador B2,2026-03-10,2026-03-10,
+SAN-001,Sándwich de jamón,Sandwich,pza,50,15,1.50,3.50,PROV-05,Mostrador S1,2026-03-10,2026-03-10,
+SAN-002,Perro caliente,Sandwich,pza,60,18,1.00,2.50,PROV-05,Mostrador S1,2026-03-10,2026-03-10,
+SAN-003,Sándwich de queso,Sandwich,pza,45,15,1.20,3.00,PROV-05,Mostrador S1,2026-03-10,2026-03-10,
+DUL-001,Galleta de chocolate,Dulce,pza,120,40,0.25,0.70,PROV-06,Mostrador DU1,2026-03-10,2026-03-10,
+DUL-002,Brownie casero,Dulce,pza,50,15,0.80,2.00,PROV-06,Mostrador DU1,2026-03-10,2026-03-10,
+DUL-003,Helado bola,Dulce,pza,100,30,0.50,1.50,PROV-06,Congelador DU2,2026-03-10,2026-03-10,
+DUL-004,Pastel de zanahoria,Dulce,pza,35,10,1.00,2.50,PROV-06,Mostrador DU1,2026-03-10,2026-03-10,
