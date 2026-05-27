@@ -848,3 +848,25 @@ img.lazy.loaded {
   height: 300px;
   margin: 20px 0;
 }
+
+/* Login page styles - no navbar visible */
+body.login-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+body.login-page main {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body.login-page .login-panel {
+  width: 100%;
+}
