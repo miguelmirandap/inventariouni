@@ -376,7 +376,11 @@ def login():
 
         if not user or not check_password_hash(user["password"], password):
             flash("Usuario o contrasena incorrectos.", "error")
-            return render_template("login.html")
+            response = app.make_response(render_template("login.html"))
+            response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, max-age=0"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Expires"] = "0"
+            return response
 
         session["username"] = user["username"]
         session["role"] = user["role"]
@@ -384,7 +388,11 @@ def login():
         flash(f"Bienvenido, {user['nombre']}.", "ok")
         return redirect(url_for("dashboard"))
 
-    return render_template("login.html")
+    response = app.make_response(render_template("login.html"))
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, max-age=0"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
 
 
 @app.route("/perfil/password", methods=["GET", "POST"])
@@ -429,7 +437,9 @@ def perfil_password():
 def logout():
     session.clear()
     flash("Sesion cerrada.", "ok")
-    return redirect(url_for("login"))
+    response = redirect(url_for("login"))
+    response.set_cookie("session", "", expires=0)
+    return response
 
 
 @app.route("/dashboard")
