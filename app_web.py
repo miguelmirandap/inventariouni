@@ -40,12 +40,12 @@ def format_currency(value):
     try:
         amount = float(value)
     except (TypeError, ValueError):
-        return "$0,00"
+        return "$0"
 
     negative = amount < 0
     amount = abs(amount)
-    formatted = f"{amount:,.2f}"
-    formatted = formatted.replace(",", "X").replace(".", ",").replace("X", ".")
+    # Format as Colombian Pesos with thousands separator
+    formatted = f"{int(amount):,}".replace(",", ".")
     if negative:
         formatted = f"-{formatted}"
     return f"${formatted}"
